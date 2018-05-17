@@ -12,11 +12,11 @@ var sema = DispatchSemaphore( value: 0 )
 print("Hello, World!")
 
 /*Todo :
-1. user feed
-2. create post
-3. post detail
-4. like post
-5. comment on post
+ 1. user feed
+ 2. create post
+ 3. post detail
+ 4. like post
+ 5. comment on
  */
 
 let url = "https://ply-reporter-dev.herokuapp.com/api/v1/timeline"
@@ -29,6 +29,19 @@ urlRequest.allHTTPHeaderFields =  ["Authorization" : "Basic YWRtaW46ZG90c2xhc2g=
                                    "User-Id" : "10",
                                    "Authentication-Token" : "2sTj1-s0fa37F3WBStGASg" ]
 
+func decodeResponse<T: Codable>(data: Data?, type: T.Type, decoder: JSONDecoder = JSONDecoder()) throws -> T? {
+    do {
+        if let data = data {
+            let response = try decoder.decode(Response<T>.self, from: data)
+            print(response.result as Any)
+            return response.result
+        }
+    } catch let error {
+        print("Error while decoding -> \(error.localizedDescription)")
+    }
+    return nil
+}
+
 let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
     if let err = error {
         print(err.localizedDescription)
@@ -38,25 +51,18 @@ let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, e
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         dateFormatter.timeZone = TimeZone.init(abbreviation: "UTC")
         decoder.dateDecodingStrategy = .formatted(dateFormatter)
-        do {
-            let timeline = try decoder.decode(Response<TimelineResponse>.self, from: data!).result
-            print(timeline!)
-        } catch let error {
-            print("Error while decoding -> \(error.localizedDescription)")
-        }
+        let timeline = try! decodeResponse(data: data, type: TimelineResponse.self, decoder: decoder)
+//        do {
+//            let timeline = try decoder.decode(Response<TimelineResponse>.self, from: data!).result
+//            print(timeline!)
+//        } catch let error {
+//            print("Error while decoding -> \(error.localizedDescription)")
+//        }
     }
 }
 dataTask.resume()
 
-extension Date {
-    static func dateFormatter(_ format: DateFormat = .api) -> DateFormatter {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = format.rawValue
-        dateFormatter.timeZone = TimeZone.current
 
-        return dateFormatter
-    }
-}
 
 sema.wait()
 
