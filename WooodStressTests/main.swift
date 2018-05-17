@@ -51,7 +51,7 @@ let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, e
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         dateFormatter.timeZone = TimeZone.init(abbreviation: "UTC")
         decoder.dateDecodingStrategy = .formatted(dateFormatter)
-        let timeline = try! decodeResponse(data: data, type: TimelineResponse.self, decoder: decoder)
+        let timeline = try? decodeResponse(data: data, type: TimelineResponse.self, decoder: decoder)
 //        do {
 //            let timeline = try decoder.decode(Response<TimelineResponse>.self, from: data!).result
 //            print(timeline!)
