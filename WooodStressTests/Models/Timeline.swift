@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import UIKit
-import AVKit
 
 struct Timeline: Codable {
     
@@ -24,10 +22,6 @@ struct Timeline: Codable {
     var updatedAt: Date?
     var comments: [PostComment]?
     var likes: [User]?
-    var attachmentURL: URL? {
-        return URL(str: attachment?.url)
-    }
-    var thumbnail: UIImage? = nil
 
     enum CodingKeys: String, CodingKey {
         
@@ -53,30 +47,6 @@ extension Timeline: Equatable {
             lhs.totalLikes == rhs.totalLikes &&
             lhs.totalComments == rhs.totalComments &&
             lhs.isLiked == rhs.isLiked 
-    }
-}
-
-extension Timeline {
-
-    init(post: Timeline) {
-        self = post
-        self.getThumbnailImage()
-    }
-
-    mutating func getThumbnailImage() {
-        guard attachment?.attachmentType == AssestsType.video else { return }
-
-        if let url = attachmentURL {
-            let asset: AVAsset = AVAsset(url: url)
-            let imageGenerator = AVAssetImageGenerator(asset: asset)
-            imageGenerator.appliesPreferredTrackTransform = true
-            do {
-                let thumbnailImage = try imageGenerator.copyCGImage(at: CMTimeMake(1, 60) , actualTime: nil)
-                thumbnail = UIImage(cgImage: thumbnailImage)
-            } catch let error {
-                print(error)
-            }
-        }
     }
 }
 
@@ -118,9 +88,6 @@ struct Post: Codable {
     var content: String?
     var attachment: Attachment?
     var author: User?
-    var attachmentURL: URL? {
-        return URL(str: attachment?.url)
-    }
 
     enum CodingKeys: String, CodingKey {
 

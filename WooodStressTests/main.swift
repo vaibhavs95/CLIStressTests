@@ -26,11 +26,35 @@ let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, e
         print(err.localizedDescription)
     } else {
         let decoder = JSONDecoder()
-        decoder.decode(Response<>, from: <#T##Data#>)
-        print(data)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        dateFormatter.timeZone = TimeZone.init(abbreviation: "UTC")
+        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        do {
+            let timeline = try decoder.decode(Response<TimelineResponse>.self, from: data!).result
+            print(timeline!)
+        } catch let error {
+            print("Error while decoding -> \(error.localizedDescription)")
+        }
     }
 }
 dataTask.resume()
+
+extension Date {
+    static func dateFormatter(_ format: DateFormat = .api) -> DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format.rawValue
+        dateFormatter.timeZone = TimeZone.current
+
+        return dateFormatter
+    }
+}
+
+enum DateFormat: String {
+    case api = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    case review = "MMM yyyy"
+    case news = "dd MMM yyyy"
+}
 
 sema.wait()
 

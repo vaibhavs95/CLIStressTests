@@ -33,37 +33,3 @@ struct FilterCategory: Codable {
     }
 }
 
-extension FilterCategory {
-
-    init(id: Int, name: String, subCategories: [FilterCategory]) {
-        self.id = id
-        self.name = name
-        self.subCategories = subCategories
-    }
-
-    static func getDummyData() -> [FilterCategory] {
-        let filters: [FilterCategory] =
-            [FilterCategory(id: 1, name: "Raw Material Supplier", subCategories:
-                            [FilterCategory(id: 1, name: "Face Veneer", subCategories: []),
-                             FilterCategory(id: 2, name: "Popular Veneer", subCategories: [])]
-                            ),
-             FilterCategory(id: 2, name: "Machinery Suppliers", subCategories:
-                            [FilterCategory(id: 3, name: "Peeling", subCategories: []),
-                             FilterCategory(id: 4, name: "Dryers", subCategories: [])]
-                            ),
-             FilterCategory(id: 3, name: "Manufacturers", subCategories:
-                            [FilterCategory(id: 5, name: "Plywood", subCategories:
-                                        [FilterCategory(id: 7, name: "All Red", subCategories: []),
-                                         FilterCategory(id: 8, name: "All Popular", subCategories: []),
-                                         FilterCategory(id: 43, name: "Dryrs", subCategories: []),
-                                         FilterCategory(id: 41, name: "Dryes", subCategories: []),
-                                         FilterCategory(id: 42, name: "Dryer", subCategories: [])]
-                                            ),
-                            FilterCategory(id: 6, name: "Black Boards", subCategories: [])
-                            ]),
-             FilterCategory(id: 4, name: "Distributors", subCategories: []),
-             FilterCategory(id: 5, name: "Retailers", subCategories: [])]
-        return filters
-    }
-}
-

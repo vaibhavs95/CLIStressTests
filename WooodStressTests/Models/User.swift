@@ -30,9 +30,6 @@ struct User: Codable {
     var isFollowing: Bool?
     var followersCount: Int?
     var followingsCount: Int?
-    var imageURL: URL? {
-        return URL(str: image)
-    }
 
     enum CodingKeys: String, CodingKey {
      

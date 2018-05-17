@@ -97,15 +97,7 @@ struct Assests: Codable {
 
     var url: String?
     var type: String?
-    var imageURL: URL? {
-
-        return URL(str: url)
-    }
     var image: String?
-    var itemURL: URL? {
-
-        return URL(str: image)
-    }
 
     enum CodingKeys: String, CodingKey {
 
