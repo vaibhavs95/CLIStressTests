@@ -25,6 +25,8 @@ let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, e
     if let err = error {
         print(err.localizedDescription)
     } else {
+        let decoder = JSONDecoder()
+        decoder.decode(Response<>, from: <#T##Data#>)
         print(data)
     }
 }
