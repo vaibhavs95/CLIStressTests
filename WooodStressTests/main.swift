@@ -7,5 +7,29 @@
 //
 import Foundation
 
+var sema = DispatchSemaphore( value: 0 )
+
 print("Hello, World!")
+
+let url = "https://ply-reporter-dev.herokuapp.com/api/v1/timeline"
+
+var urlRequest = URLRequest(url: URL(string: url)!)
+
+urlRequest.allHTTPHeaderFields =  ["Authorization" : "Basic YWRtaW46ZG90c2xhc2g=",
+                                   "Content-Type" : "application/json; charset=utf-8",
+                                   "User-Language" : "en",
+                                   "User-Id" : "10",
+                                   "Authentication-Token" : "2sTj1-s0fa37F3WBStGASg" ]
+
+let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+    if let err = error {
+        print(err.localizedDescription)
+    } else {
+        print(data)
+    }
+}
+dataTask.resume()
+
+sema.wait()
+
 
