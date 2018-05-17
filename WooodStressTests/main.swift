@@ -11,6 +11,14 @@ var sema = DispatchSemaphore( value: 0 )
 
 print("Hello, World!")
 
+/*Todo :
+1. user feed
+2. create post
+3. post detail
+4. like post
+5. comment on post
+ */
+
 let url = "https://ply-reporter-dev.herokuapp.com/api/v1/timeline"
 
 var urlRequest = URLRequest(url: URL(string: url)!)
@@ -48,12 +56,6 @@ extension Date {
 
         return dateFormatter
     }
-}
-
-enum DateFormat: String {
-    case api = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-    case review = "MMM yyyy"
-    case news = "dd MMM yyyy"
 }
 
 sema.wait()
