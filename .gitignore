@@ -66,3 +66,8 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+#User state specific files
+*.xcuserstate
+
+WooodStressTests.xcodeproj/project.xcworkspace/xcuserdata/vaibhavsingh.xcuserdatad/UserInterfaceState.xcuserstate
