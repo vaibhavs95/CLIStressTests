@@ -40,8 +40,8 @@ enum Router {
             return "/api/v1/post"
         case .deletePost(let id):
             return "/api/v1/post/\(id)"
-        case .getUserFeed(let id):
-            return "/api/v1/timeline/user_feed?user_feed=\(id)"
+        case .getUserFeed:
+            return "/api/v1/timeline/user_feed"
         case .getPostDetail(let id):
             return "/api/v1/post/\(id)"
         case .getAllComments(let postId):
@@ -54,7 +54,7 @@ enum Router {
     var parameters: [String: Any]? {
         switch self {
             case .getUserFeed(let id):
-                return ["user_id": id]
+                return ["user_id": "\(id)"]
             default:
                 return nil
         }
@@ -65,6 +65,11 @@ enum Router {
             { throw APIError.invalidURL(reason: "Url couldn't be generated.") }
         do {
             var urlRequest = URLRequest(url: url)
+            if case Router.getUserFeed = self {
+                var components = URLComponents(string: "https://ply-reporter-dev.herokuapp.com/api/v1/timeline/user_feed")
+                components?.queryItems = [URLQueryItem(name: (self.parameters?.first?.key)!, value: (self.parameters?.first?.value) as? String)]
+                urlRequest.url = components?.url
+            }
             urlRequest.httpMethod = method.rawValue
             urlRequest.allHTTPHeaderFields = NetworkManager.authorizationHeaders
             let encoder = JSONEncoder()
