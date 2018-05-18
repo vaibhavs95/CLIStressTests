@@ -124,9 +124,6 @@ class NetworkManager {
                 completion()
                 let response = self.decodeResponse(data: data, type: type, decoder: decoder)
                 print(response as Any)
-                if let timeline = response as? TimelineResponse, let user = timeline.timeline?.user {
-                    DummyUser.users.insert(user)
-                }
             }
         }
         dataTask.resume()

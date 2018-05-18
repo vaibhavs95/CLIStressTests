@@ -10,11 +10,8 @@ import Foundation
 
 struct DummyUser {
 
-    let authToken: String?
-    let userId: String?
-    let user: User? = nil
-
-    static var users: Set<User> = []
+    let authToken: String
+    let userId: String
 
     static let current: [DummyUser] = [ DummyUser(authToken: "2sTj1-s0fa37F3WBStGASg", userId: "10") ]
 }

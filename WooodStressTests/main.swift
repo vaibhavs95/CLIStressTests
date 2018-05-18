@@ -19,7 +19,8 @@ decoder.dateDecodingStrategy = .formatted(dateFormatter)
 
 
 let post = Post(postId: nil, commentText: nil, content: "something", attachment: nil, author: nil)
-let createPost = NetworkManager(type: .createPost(post: post), authToken: "2sTj1-s0fa37F3WBStGASg", userID: "10")
+
+let createPost = NetworkManager(type: .createPost(post: post), authToken: DummyUser.current[0].authToken, userID: DummyUser.current[0].userId)
 createPost.creteTask(type: CreatePostReponse.self) {
     print("post created")
 }
