@@ -68,6 +68,13 @@ extension User: Equatable {
     }
 }
 
+extension User: Hashable {
+
+    var hashValue: Int {
+        return id ?? 0
+    }
+}
+
 struct Friends: Codable {
 
     var contactNumbers: [String]
