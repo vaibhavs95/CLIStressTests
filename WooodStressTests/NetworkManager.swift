@@ -88,12 +88,47 @@ class NetworkManager {
     static let authorizationHeaders: [String : String] = ["Authorization" : "Basic YWRtaW46ZG90c2xhc2g=",
                                                          "Content-Type" : "application/json; charset=utf-8",
                                                          "User-Language" : "en" ]
+    let authToken: String!
+    let userId: String!
+    let type: Router!
+    var request: URLRequest?
 
-    func decodeResponse<T: Codable>(data: Data?, type: T.Type, decoder: JSONDecoder = JSONDecoder()) throws -> T? {
+    init(type: Router, authToken: String, userID: String) {
+        self.authToken = authToken
+        self.userId = userID
+        self.type = type
+    }
+
+    private func setup() {
+        do {
+            request = try type.asURLRequest()
+            request?.addValue(authToken, forHTTPHeaderField: "Authentication-Token")
+            request?.addValue(userId, forHTTPHeaderField: "User-Id")
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
+
+    func creteTask<T: Codable>(type: T.Type, decoder: JSONDecoder = JSONDecoder(), completion: @escaping (() -> ())) {
+        setup()
+        guard let urlRequest = request else { return }
+        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+            if let err = error {
+                print(err.localizedDescription)
+            } else {
+                completion()
+                let response = self.decodeResponse(data: data, type: type, decoder: decoder)
+                print(response as Any)
+            }
+        }
+        dataTask.resume()
+    }
+
+    func decodeResponse<T: Codable>(data: Data?, type: T.Type, decoder: JSONDecoder) -> T? {
         do {
             if let data = data {
                 let response = try decoder.decode(Response<T>.self, from: data)
-                print(response.result as Any)
+//                print(response.result as Any)
                 return response.result
             }
         } catch let error {
