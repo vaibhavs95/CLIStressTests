@@ -133,7 +133,6 @@ class NetworkManager {
         do {
             if let data = data {
                 let response = try decoder.decode(Response<T>.self, from: data)
-//                print(response.result as Any)
                 return response.result
             }
         } catch let error {

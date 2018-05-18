@@ -27,12 +27,6 @@ dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 dateFormatter.timeZone = TimeZone.init(abbreviation: "UTC")
 decoder.dateDecodingStrategy = .formatted(dateFormatter)
 
-//let timelineApi = NetworkManager.init(type: Router.getTimeline, authToken: "2sTj1-s0fa37F3WBStGASg", userID: "10")
-//timelineApi.creteTask(type: TimelineResponse.self, decoder: decoder) {
-//    print("Yay!!")
-//}
-
-
 let another = NetworkManager(type: .getUserFeed(id: 10), authToken: "2sTj1-s0fa37F3WBStGASg", userID: "10")
 another.creteTask(type: TimelineResponse.self, decoder: decoder) {
     print("User Feed!")
