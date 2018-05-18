@@ -30,6 +30,7 @@
 		224CEAAA20AD9C9800E8846B /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224CEA9620AD9C9800E8846B /* AppConfig.swift */; };
 		22B541B420AEB59900CCC77C /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B541B320AEB59900CCC77C /* NetworkManager.swift */; };
 		22B541B620AEC05A00CCC77C /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B541B520AEC05A00CCC77C /* APIError.swift */; };
+		22B541B820AEDC0700CCC77C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B541B720AEDC0700CCC77C /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -69,6 +70,7 @@
 		224CEA9620AD9C9800E8846B /* AppConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		22B541B320AEB59900CCC77C /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		22B541B520AEC05A00CCC77C /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		22B541B720AEDC0700CCC77C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 			children = (
 				224CEA7620AD680800E8846B /* main.swift */,
 				22B541B320AEB59900CCC77C /* NetworkManager.swift */,
+				22B541B720AEDC0700CCC77C /* User.swift */,
 				22B541B520AEC05A00CCC77C /* APIError.swift */,
 				224CEA8220AD9C9800E8846B /* Models */,
 			);
@@ -214,6 +217,7 @@
 				224CEAA520AD9C9800E8846B /* FirebaseUserDatabase.swift in Sources */,
 				224CEA9820AD9C9800E8846B /* Enquiry.swift in Sources */,
 				224CEA7720AD680800E8846B /* main.swift in Sources */,
+				22B541B820AEDC0700CCC77C /* User.swift in Sources */,
 				224CEAA120AD9C9800E8846B /* Question.swift in Sources */,
 				224CEA9F20AD9C9800E8846B /* User.swift in Sources */,
 				224CEA9E20AD9C9800E8846B /* Folder.swift in Sources */,
