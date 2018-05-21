@@ -16,9 +16,9 @@ enum Router {
     case getPostDetail(id: Int)
     case likePost(post: Post)
     case comment(post: Post)
-    case deletePost(id: Int)
     case getAllComments(postId: Int)
     case getAllLikes(postId: Int)
+    case deletePost(id: Int)
 
     var method: HTTPMethod {
         switch self {
