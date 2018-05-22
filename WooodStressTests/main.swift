@@ -29,6 +29,7 @@ if CommandLine.arguments.count == 4,
 } else {
     let io = ConsoleIO()
     io.printUsage()
+    sema.signal()
 }
 
 enum APIType: Int {
