@@ -18,13 +18,13 @@ enum Router {
     case comment(post: Post)
     case getAllComments(postId: Int)
     case getAllLikes(postId: Int)
-    case deletePost(id: Int)
+//    case deletePost(id: Int)
 
     var method: HTTPMethod {
         switch self {
             case .getTimeline, .getUserFeed, .getAllLikes, .getAllComments, .getPostDetail: return .get
             case .likePost, .comment, .createPost: return .post
-            case .deletePost: return .delete
+//            case .deletePost: return .delete
         }
     }
 
@@ -38,8 +38,8 @@ enum Router {
             return "/api/v1/comments"
         case .createPost:
             return "/api/v1/post"
-        case .deletePost(let id):
-            return "/api/v1/post/\(id)"
+//        case .deletePost(let id):
+//            return "/api/v1/post/\(id)"
         case .getUserFeed:
             return "/api/v1/timeline/user_feed"
         case .getPostDetail(let id):
@@ -115,16 +115,15 @@ class NetworkManager {
         }
     }
 
-    func creteTask<T: Codable>(type: T.Type, decoder: JSONDecoder = JSONDecoder(), completion: @escaping (() -> ())) {
+    func creteTask<T: Codable>(type: T.Type, decoder: JSONDecoder = JSONDecoder(), completion: @escaping ((Bool) -> ())) {
         setup()
         guard let urlRequest = request else { return }
         let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
             if let err = error {
                 print(err.localizedDescription)
+                completion(false)
             } else {
-                completion()
-                let response = self.decodeResponse(data: data, type: type, decoder: decoder)
-                print(response as Any)
+                completion(true)
             }
         }
         dataTask.resume()
