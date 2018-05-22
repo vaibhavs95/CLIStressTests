@@ -22,4 +22,9 @@ struct DummyUser {
         DummyUser(authToken: "KxiUr2ay_1hD7s6_LdwQsQ", userId: "30"),
         DummyUser(authToken: "85NEta6eZxHOZd11jhaRdQ", userId: "33")
     ]
+
+    static func getUsers(_ count: Int) -> [DummyUser] {
+        let upperLimit = count < DummyUser.current.count ? count : DummyUser.current.count
+        return Array(DummyUser.current.prefix(upperLimit))
+    }
 }
