@@ -34,21 +34,3 @@ class ConsoleIO {
         writeMessage("Type \(executableName) without an option to enter default mode.")
     }
 }
-
-enum OptionType: String {
-    case arguments = "a"
-    case help = "h"
-    case unknown
-
-    init(value: String) {
-        switch value {
-        case "a": self = .arguments
-        case "h": self = .help
-        default: self = .unknown
-        }
-    }
-
-    func getOption(_ option: String) -> (option:OptionType, value: String) {
-        return (OptionType(value: option), option)
-    }
-}

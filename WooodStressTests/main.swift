@@ -22,10 +22,13 @@ if CommandLine.arguments.count == 4,
     numberOfUsers = users
     delayBetweenUsers = userDelay
     delayBetweenApis = apiDelay
-} else {
+} else if CommandLine.arguments.count == 1{
     numberOfUsers = DummyUser.current.count
     delayBetweenUsers = 50
     delayBetweenApis = 500
+} else {
+    let io = ConsoleIO()
+    io.printUsage()
 }
 
 enum APIType: Int {
@@ -150,7 +153,7 @@ func makeAPICall(index: Int, user: DummyUser) {
 
 func APIcalling(user: DummyUser) {
     var index = 0
-    timer = Timer.scheduledTimer(withTimeInterval: delayBetweenApis / 1000, repeats: true, block: {(timer) in
+    timer = Timer.scheduledTimer(withTimeInterval: TimeInterval(delayBetweenApis / 1000), repeats: true, block: {(timer) in
         makeAPICall(index: index, user: user)
         if index == 7 {
             timer.invalidate()
@@ -166,6 +169,6 @@ func APIcalling(user: DummyUser) {
 for (index, user) in DummyUser.getUsers(numberOfUsers).enumerated() {
     print("Calling for user : \(index)")
     APIcalling(user: user)
-    usleep(delayBetweenUsers * 1000)
+    usleep(UInt32(delayBetweenUsers) * 1000)
 }
 sema.wait()
