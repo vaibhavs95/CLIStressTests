@@ -38,6 +38,8 @@ func timeCalculationForAPIResponse(_ index: Int, _ date: Date) {
     arr[index].max = arr[index].max > -date.timeIntervalSinceNow ? arr[index].max : -date.timeIntervalSinceNow
     arr[index].average =  (arr[index].average * Double(arr[index].totalResponse) + -date.timeIntervalSinceNow) / Double(arr[index].totalResponse + 1)
     arr[index].totalResponse = arr[index].totalResponse + 1
+    print("API Call at index \(index)")
+    print(arr[index])
 }
 
 func makeAPICall(index: Int, user: DummyUser) {
@@ -47,72 +49,75 @@ func makeAPICall(index: Int, user: DummyUser) {
     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     dateFormatter.timeZone = TimeZone.init(abbreviation: "UTC")
     decoder.dateDecodingStrategy = .formatted(dateFormatter)
-    switch index{
+    switch index {
     case 0:
-        let timeline = NetworkManager(type: .getTimeline, authToken: "2sTj1-s0fa37F3WBStGASg", userID: "10")
+        let timeline = NetworkManager(type: .getTimeline, authToken: user.authToken, userID: user.userId)
         timeline.creteTask(type: TimelineResponse.self, decoder: decoder) {
             timeCalculationForAPIResponse(index, date)
         }
     case 1:
-        let getUserFeed = NetworkManager(type: .getUserFeed(id: 10), authToken: "2sTj1-s0fa37F3WBStGASg", userID: "10")
+        let getUserFeed = NetworkManager(type: .getUserFeed(id: 10), authToken: user.authToken, userID: user.userId)
         getUserFeed.creteTask(type: TimelineResponse.self, decoder: decoder) {
             timeCalculationForAPIResponse(index, date)
         }
     case 2:
-        let post = Post(postId: nil, commentText: nil, content: "something", attachment: nil, author: nil)
-        let createPost = NetworkManager(type: .createPost(post: post), authToken: DummyUser.current[0].authToken, userID: DummyUser.current[0].userId)
-        createPost.creteTask(type: CreatePostReponse.self) {
+        let post = Post(postId: nil, commentText: nil, content: "create new post for testing server response", attachment: nil, author: nil)
+        let createPost = NetworkManager(type: .createPost(post: post), authToken: user.authToken, userID: user.userId)
+        createPost.creteTask(type: CreatePostReponse.self, decoder: decoder) {
             timeCalculationForAPIResponse(index, date)
         }
 
     case 3:
-        let postDetail = NetworkManager(type: .getPostDetail(id: 806), authToken: "2sTj1-s0fa37F3WBStGASg", userID: "10")
+        let postDetail = NetworkManager(type: .getPostDetail(id: 806), authToken: user.authToken, userID: user.userId)
         postDetail.creteTask(type: PostDetail.self, decoder: decoder) {
             timeCalculationForAPIResponse(index, date)
         }
     case 4:
-        let likePost = NetworkManager(type: .likePost(post: Post(postId: 806, commentText: nil, content: nil, attachment: nil, author: nil)), authToken: "2sTj1-s0fa37F3WBStGASg", userID: "10")
-        likePost.creteTask(type: PostDetail.self, decoder: decoder) {
+        let likePost = NetworkManager(type: .likePost(post: Post(postId: 806, commentText: nil, content: nil, attachment: nil, author: nil)), authToken: user.authToken, userID: user.userId)
+        likePost.creteTask(type: TimelineResponse.self, decoder: decoder) {
             timeCalculationForAPIResponse(index, date)
         }
     case 5:
         let post = Post(postId: 806, commentText: "this is the comment", content: nil, attachment: nil, author: nil)
-        let commentOnPost = NetworkManager(type: .comment(post: post), authToken: "2sTj1-s0fa37F3WBStGASg", userID: "10")
-        commentOnPost.creteTask(type: PostDetail.self, decoder: decoder) {
+        let commentOnPost = NetworkManager(type: .comment(post: post), authToken: user.authToken, userID: user.userId)
+        commentOnPost.creteTask(type: CommentResult.self, decoder: decoder) {
             timeCalculationForAPIResponse(index, date)
         }
     case 6:
-        let likes = NetworkManager(type: .getAllLikes(postId: 806), authToken: "2sTj1-s0fa37F3WBStGASg", userID: "10")
-        likes.creteTask(type: PostLikes.self, decoder: decoder) {
+        let comments = NetworkManager(type: .getAllComments(postId: 806), authToken: user.authToken, userID: user.userId)
+        comments.creteTask(type: PostCommentsResponse.self, decoder: decoder) {
             timeCalculationForAPIResponse(index, date)
         }
     case 7:
-        let comments = NetworkManager(type: .getAllLikes(postId: 806), authToken: "2sTj1-s0fa37F3WBStGASg", userID: "10")
-        comments.creteTask(type: PostCommentsResponse.self, decoder: decoder) {
+        let likes = NetworkManager(type: .getAllLikes(postId: 806), authToken: user.authToken, userID: user.userId)
+        likes.creteTask(type: PostLikes.self, decoder: decoder) {
             timeCalculationForAPIResponse(index, date)
         }
     //    case 8: //TODO: delete
     default:
-        let timeline = NetworkManager(type: .getTimeline, authToken: "2sTj1-s0fa37F3WBStGASg", userID: "10")
+        let timeline = NetworkManager(type: .getTimeline, authToken: user.authToken, userID: user.userId)
         timeline.creteTask(type: TimelineResponse.self, decoder: decoder) {
             timeCalculationForAPIResponse(index, date)
         }
     }
 }
 
-var index = 0
-timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: {(timer) in
-    makeAPICall(index: index, user: DummyUser.current[0])
-    if index == 8 {
-        timer.invalidate()
-    } else {
-     index = index + 1
-        timer.fire()
-    }
-})
+func APIcalling(user: DummyUser) {
+    var index = 0
+    timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: {(timer) in
+        makeAPICall(index: index, user: user)
+        if index == 7 {
+            timer.invalidate()
+        } else {
+            index = index + 1
+            timer.fire()
+        }
+    })
 
-timer?.fire()
+    timer?.fire()
+}
+
+for user in DummyUser.current {
+    APIcalling(user: user)
+}
 sema.wait()
-print(arr)
-
-

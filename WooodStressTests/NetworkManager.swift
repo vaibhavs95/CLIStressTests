@@ -70,6 +70,7 @@ enum Router {
                 components?.queryItems = [URLQueryItem(name: (self.parameters?.first?.key)!, value: (self.parameters?.first?.value) as? String)]
                 urlRequest.url = components?.url
             }
+            
             urlRequest.httpMethod = method.rawValue
             urlRequest.allHTTPHeaderFields = NetworkManager.authorizationHeaders
             let encoder = JSONEncoder()
