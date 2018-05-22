@@ -45,7 +45,10 @@ func timeCalculationForAPIResponse(_ index: Int, _ time: Double) {
 func printTimeArray() {
     let totalResponses = arr.map{$0.totalResponse}
     if totalResponses == resonses {
-        print(arr)
+        for time in arr {
+            print(time as Any)
+            print("\n")
+        }
         sema.signal()
     }
 }
@@ -146,5 +149,6 @@ func APIcalling(user: DummyUser) {
 for (index, user) in DummyUser.current.enumerated() {
     print("Calling for user : \(index)")
     APIcalling(user: user)
+    usleep(1000000)
 }
 sema.wait()
