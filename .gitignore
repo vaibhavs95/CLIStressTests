@@ -27,6 +27,7 @@ xcuserdata/
 *.ipa
 *.dSYM.zip
 *.dSYM
+*.DS_Store
 
 ## Playgrounds
 timeline.xctimeline
@@ -71,3 +72,4 @@ fastlane/test_output
 *.xcuserstate
 
 WooodStressTests.xcodeproj/project.xcworkspace/xcuserdata/vaibhavsingh.xcuserdatad/UserInterfaceState.xcuserstate
+.DS_Store
