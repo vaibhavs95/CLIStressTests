@@ -11,6 +11,23 @@ var sema = DispatchSemaphore( value: 0 )
 
 print("Hello, World!")
 
+var delayBetweenUsers = Int()
+var delayBetweenApis = Int()
+var numberOfUsers = Int()
+
+if CommandLine.arguments.count == 4,
+    let users = Int(CommandLine.arguments[1]),
+    let userDelay = Int(CommandLine.arguments[2]),
+    let apiDelay = Int(CommandLine.arguments[3]) {
+    numberOfUsers = users
+    delayBetweenUsers = userDelay
+    delayBetweenApis = apiDelay
+} else {
+    numberOfUsers = DummyUser.current.count
+    delayBetweenUsers = 50
+    delayBetweenApis = 500
+}
+
 enum APIType: Int {
     case getTimeline = 0
     case getUserFeed
@@ -133,7 +150,7 @@ func makeAPICall(index: Int, user: DummyUser) {
 
 func APIcalling(user: DummyUser) {
     var index = 0
-    timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: {(timer) in
+    timer = Timer.scheduledTimer(withTimeInterval: delayBetweenApis / 1000, repeats: true, block: {(timer) in
         makeAPICall(index: index, user: user)
         if index == 7 {
             timer.invalidate()
@@ -146,9 +163,9 @@ func APIcalling(user: DummyUser) {
     timer?.fire()
 }
 
-for (index, user) in DummyUser.current.enumerated() {
+for (index, user) in DummyUser.getUsers(numberOfUsers).enumerated() {
     print("Calling for user : \(index)")
     APIcalling(user: user)
-    usleep(1000000)
+    usleep(delayBetweenUsers * 1000)
 }
 sema.wait()

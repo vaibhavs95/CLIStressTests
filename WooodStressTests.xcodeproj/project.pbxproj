@@ -31,6 +31,7 @@
 		22B541B420AEB59900CCC77C /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B541B320AEB59900CCC77C /* NetworkManager.swift */; };
 		22B541B620AEC05A00CCC77C /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B541B520AEC05A00CCC77C /* APIError.swift */; };
 		22B541B820AEDC0700CCC77C /* DummyUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B541B720AEDC0700CCC77C /* DummyUser.swift */; };
+		22CCD7F420B441FA00254FD4 /* Usage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CCD7F320B441FA00254FD4 /* Usage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -71,6 +72,7 @@
 		22B541B320AEB59900CCC77C /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		22B541B520AEC05A00CCC77C /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		22B541B720AEDC0700CCC77C /* DummyUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyUser.swift; sourceTree = "<group>"; };
+		22CCD7F320B441FA00254FD4 /* Usage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Usage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 				22B541B320AEB59900CCC77C /* NetworkManager.swift */,
 				22B541B720AEDC0700CCC77C /* DummyUser.swift */,
 				22B541B520AEC05A00CCC77C /* APIError.swift */,
+				22CCD7F320B441FA00254FD4 /* Usage.swift */,
 				224CEA8220AD9C9800E8846B /* Models */,
 			);
 			path = WooodStressTests;
@@ -208,6 +211,7 @@
 				224CEAA420AD9C9800E8846B /* Bookmark.swift in Sources */,
 				224CEAA920AD9C9800E8846B /* Answer.swift in Sources */,
 				224CEA9D20AD9C9800E8846B /* BusinessCategory.swift in Sources */,
+				22CCD7F420B441FA00254FD4 /* Usage.swift in Sources */,
 				22B541B620AEC05A00CCC77C /* APIError.swift in Sources */,
 				224CEAA720AD9C9800E8846B /* Filter.swift in Sources */,
 				224CEAA320AD9C9800E8846B /* Response.swift in Sources */,
